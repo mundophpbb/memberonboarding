@@ -1,0 +1,48 @@
+services:
+    mundophpbb.memberonboarding.manager:
+        class: mundophpbb\memberonboarding\core\manager
+        arguments:
+            - '@config'
+            - '@dbal.conn'
+            - '@language'
+            - '@controller.helper'
+            - '%core.root_path%'
+            - '%core.php_ext%'
+            - '%core.table_prefix%'
+
+    mundophpbb.memberonboarding.listener:
+        class: mundophpbb\memberonboarding\event\listener
+        arguments:
+            - '@config'
+            - '@user'
+            - '@template'
+            - '@controller.helper'
+            - '@mundophpbb.memberonboarding.manager'
+        tags:
+            - { name: event.listener }
+
+    mundophpbb.memberonboarding.acp_controller:
+        class: mundophpbb\memberonboarding\controller\acp_controller
+        arguments:
+            - '@config'
+            - '@dbal.conn'
+            - '@request'
+            - '@template'
+            - '@user'
+            - '@language'
+            - '@log'
+            - '@mundophpbb.memberonboarding.manager'
+            - '%core.root_path%'
+            - '%core.php_ext%'
+            - '%core.table_prefix%'
+
+    mundophpbb.memberonboarding.main_controller:
+        class: mundophpbb\memberonboarding\controller\main_controller
+        arguments:
+            - '@controller.helper'
+            - '@template'
+            - '@user'
+            - '@language'
+            - '@mundophpbb.memberonboarding.manager'
+            - '%core.root_path%'
+            - '%core.php_ext%'

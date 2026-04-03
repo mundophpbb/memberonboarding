@@ -1,0 +1,364 @@
+<!-- INCLUDE overall_header.html -->
+
+<h1>{L_ACP_MEMBERONBOARDING_TITLE}</h1>
+<p>{L_ACP_MEMBERONBOARDING_EXPLAIN}</p>
+
+<style>
+.memberonboarding-chip {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    line-height: 1.5;
+    font-weight: 700;
+    white-space: nowrap;
+}
+.memberonboarding-chip-good { background: #e8f7ea; color: #1f6b2c; }
+.memberonboarding-chip-watch { background: #fff4db; color: #8a5b00; }
+.memberonboarding-chip-alert { background: #fdeaea; color: #a12622; }
+.memberonboarding-chip-neutral { background: #eef2f6; color: #4b5a68; }
+.memberonboarding-progressbar {
+    width: 110px;
+    height: 8px;
+    background: #edf1f5;
+    border-radius: 999px;
+    overflow: hidden;
+    margin: 0 0 4px 0;
+}
+.memberonboarding-progressbar span {
+    display: block;
+    height: 100%;
+    background: #5c7ea6;
+}
+.memberonboarding-progresscell { min-width: 130px; }
+.memberonboarding-muted { color: #6b7785; font-size: 11px; }
+.memberonboarding-row-alert td { background: #fff7f7 !important; }
+.memberonboarding-row-done td { background: #f7fcf7 !important; }
+</style>
+
+<form id="acp_memberonboarding" method="post" action="{U_ACTION}">
+    <fieldset>
+        <legend>{L_ACP_MEMBERONBOARDING_SETTINGS}</legend>
+
+        <dl>
+            <dt>
+                <label for="memberonboarding_enable">{L_ACP_MEMBERONBOARDING_ENABLE}</label><br>
+                <span>{L_ACP_MEMBERONBOARDING_ENABLE_EXPLAIN}</span>
+            </dt>
+            <dd>
+                <label><input type="radio" class="radio" name="memberonboarding_enable" value="1"<!-- IF MEMBERONBOARDING_ENABLE --> checked="checked"<!-- ENDIF --> /> {L_YES}</label>
+                <label><input type="radio" class="radio" name="memberonboarding_enable" value="0"<!-- IF not MEMBERONBOARDING_ENABLE --> checked="checked"<!-- ENDIF --> /> {L_NO}</label>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>
+                <label for="memberonboarding_checklist_enable">{L_ACP_MEMBERONBOARDING_CHECKLIST_ENABLE}</label><br>
+                <span>{L_ACP_MEMBERONBOARDING_CHECKLIST_ENABLE_EXPLAIN}</span>
+            </dt>
+            <dd>
+                <label><input type="radio" class="radio" name="memberonboarding_checklist_enable" value="1"<!-- IF MEMBERONBOARDING_CHECKLIST_ENABLE --> checked="checked"<!-- ENDIF --> /> {L_YES}</label>
+                <label><input type="radio" class="radio" name="memberonboarding_checklist_enable" value="0"<!-- IF not MEMBERONBOARDING_CHECKLIST_ENABLE --> checked="checked"<!-- ENDIF --> /> {L_NO}</label>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>
+                <label for="memberonboarding_index_widget">{L_ACP_MEMBERONBOARDING_INDEX_WIDGET}</label><br>
+                <span>{L_ACP_MEMBERONBOARDING_INDEX_WIDGET_EXPLAIN}</span>
+            </dt>
+            <dd>
+                <label><input type="radio" class="radio" name="memberonboarding_index_widget" value="1"<!-- IF MEMBERONBOARDING_INDEX_WIDGET --> checked="checked"<!-- ENDIF --> /> {L_YES}</label>
+                <label><input type="radio" class="radio" name="memberonboarding_index_widget" value="0"<!-- IF not MEMBERONBOARDING_INDEX_WIDGET --> checked="checked"<!-- ENDIF --> /> {L_NO}</label>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>
+                <label for="memberonboarding_nav_link">{L_ACP_MEMBERONBOARDING_NAV_LINK}</label><br>
+                <span>{L_ACP_MEMBERONBOARDING_NAV_LINK_EXPLAIN}</span>
+            </dt>
+            <dd>
+                <label><input type="radio" class="radio" name="memberonboarding_nav_link" value="1"<!-- IF MEMBERONBOARDING_NAV_LINK --> checked="checked"<!-- ENDIF --> /> {L_YES}</label>
+                <label><input type="radio" class="radio" name="memberonboarding_nav_link" value="0"<!-- IF not MEMBERONBOARDING_NAV_LINK --> checked="checked"<!-- ENDIF --> /> {L_NO}</label>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>
+                <label for="memberonboarding_welcome_pm">{L_ACP_MEMBERONBOARDING_WELCOME_PM}</label><br>
+                <span>{L_ACP_MEMBERONBOARDING_WELCOME_PM_EXPLAIN}</span>
+            </dt>
+            <dd>
+                <label><input type="radio" class="radio" name="memberonboarding_welcome_pm" value="1"<!-- IF MEMBERONBOARDING_WELCOME_PM --> checked="checked"<!-- ENDIF --> /> {L_YES}</label>
+                <label><input type="radio" class="radio" name="memberonboarding_welcome_pm" value="0"<!-- IF not MEMBERONBOARDING_WELCOME_PM --> checked="checked"<!-- ENDIF --> /> {L_NO}</label>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>
+                <label for="memberonboarding_staff_alert">{L_ACP_MEMBERONBOARDING_STAFF_ALERT}</label><br>
+                <span>{L_ACP_MEMBERONBOARDING_STAFF_ALERT_EXPLAIN}</span>
+            </dt>
+            <dd>
+                <label><input type="radio" class="radio" name="memberonboarding_staff_alert" value="1"<!-- IF MEMBERONBOARDING_STAFF_ALERT --> checked="checked"<!-- ENDIF --> /> {L_YES}</label>
+                <label><input type="radio" class="radio" name="memberonboarding_staff_alert" value="0"<!-- IF not MEMBERONBOARDING_STAFF_ALERT --> checked="checked"<!-- ENDIF --> /> {L_NO}</label>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>
+                <label for="memberonboarding_welcome_subject">{L_ACP_MEMBERONBOARDING_WELCOME_SUBJECT}</label><br>
+                <span>{L_ACP_MEMBERONBOARDING_WELCOME_SUBJECT_EXPLAIN}</span>
+            </dt>
+            <dd>
+                <input type="text" id="memberonboarding_welcome_subject" name="memberonboarding_welcome_subject" value="{MEMBERONBOARDING_WELCOME_SUBJECT}" size="60" maxlength="255" />
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>
+                <label for="memberonboarding_welcome_message">{L_ACP_MEMBERONBOARDING_WELCOME_MESSAGE}</label><br>
+                <span>{L_ACP_MEMBERONBOARDING_WELCOME_MESSAGE_EXPLAIN}</span>
+            </dt>
+            <dd>
+                <textarea id="memberonboarding_welcome_message" name="memberonboarding_welcome_message" rows="8" cols="80">{MEMBERONBOARDING_WELCOME_MESSAGE}</textarea>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>
+                <label for="memberonboarding_recommend_forums">{L_ACP_MEMBERONBOARDING_RECOMMEND_FORUMS}</label><br>
+                <span>{L_ACP_MEMBERONBOARDING_RECOMMEND_FORUMS_EXPLAIN}</span>
+            </dt>
+            <dd>
+                <textarea id="memberonboarding_recommend_forums" name="memberonboarding_recommend_forums" rows="3" cols="60">{MEMBERONBOARDING_RECOMMEND_FORUMS}</textarea>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>
+                <label>{L_ACP_MEMBERONBOARDING_PROFILE_RULES}</label><br>
+                <span>{L_ACP_MEMBERONBOARDING_PROFILE_RULES_EXPLAIN}</span>
+            </dt>
+            <dd>
+                <fieldset class="phpbb-memberonboarding-profile-box">
+                    <legend>{L_ACP_MEMBERONBOARDING_PROFILE_RULES_BUILTIN}</legend>
+                    <!-- BEGIN profile_builtin_field -->
+                    <label style="display:block; margin: 0 0 4px 0;"><input type="checkbox" class="radio" name="memberonboarding_profile_required_builtin[]" value="{profile_builtin_field.FIELD_KEY}"<!-- IF profile_builtin_field.S_CHECKED --> checked="checked"<!-- ENDIF --> /> {profile_builtin_field.FIELD_LABEL}</label>
+                    <!-- END profile_builtin_field -->
+                </fieldset>
+
+                <!-- IF .profile_custom_field -->
+                <fieldset class="phpbb-memberonboarding-profile-box" style="margin-top: 8px;">
+                    <legend>{L_ACP_MEMBERONBOARDING_PROFILE_RULES_CUSTOM}</legend>
+                    <!-- BEGIN profile_custom_field -->
+                    <label style="display:block; margin: 0 0 4px 0;"><input type="checkbox" class="radio" name="memberonboarding_profile_required_custom[]" value="{profile_custom_field.FIELD_KEY}"<!-- IF profile_custom_field.S_CHECKED --> checked="checked"<!-- ENDIF --> /> {profile_custom_field.FIELD_LABEL}</label>
+                    <!-- END profile_custom_field -->
+                </fieldset>
+                <!-- ENDIF -->
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>
+                <label for="memberonboarding_recent_limit">{L_ACP_MEMBERONBOARDING_RECENT_LIMIT}</label><br>
+                <span>{L_ACP_MEMBERONBOARDING_RECENT_LIMIT_EXPLAIN}</span>
+            </dt>
+            <dd>
+                <input type="number" id="memberonboarding_recent_limit" name="memberonboarding_recent_limit" value="{MEMBERONBOARDING_RECENT_LIMIT}" min="5" max="50" />
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>
+                <label for="memberonboarding_level_integrated_min">{L_ACP_MEMBERONBOARDING_LEVEL_INTEGRATED_MIN}</label><br>
+                <span>{L_ACP_MEMBERONBOARDING_LEVEL_INTEGRATED_MIN_EXPLAIN}</span>
+            </dt>
+            <dd>
+                <input type="number" id="memberonboarding_level_integrated_min" name="memberonboarding_level_integrated_min" value="{MEMBERONBOARDING_LEVEL_INTEGRATED_MIN}" min="1" max="99" />
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>
+                <label for="memberonboarding_level_active_min">{L_ACP_MEMBERONBOARDING_LEVEL_ACTIVE_MIN}</label><br>
+                <span>{L_ACP_MEMBERONBOARDING_LEVEL_ACTIVE_MIN_EXPLAIN}</span>
+            </dt>
+            <dd>
+                <input type="number" id="memberonboarding_level_active_min" name="memberonboarding_level_active_min" value="{MEMBERONBOARDING_LEVEL_ACTIVE_MIN}" min="2" max="100" />
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>
+                <label for="memberonboarding_first_badge_enable">{L_ACP_MEMBERONBOARDING_FIRST_BADGE}</label><br>
+                <span>{L_ACP_MEMBERONBOARDING_FIRST_BADGE_EXPLAIN}</span>
+            </dt>
+            <dd>
+                <label><input type="radio" class="radio" name="memberonboarding_first_badge_enable" value="1"<!-- IF MEMBERONBOARDING_FIRST_BADGE --> checked="checked"<!-- ENDIF --> /> {L_YES}</label>
+                <label><input type="radio" class="radio" name="memberonboarding_first_badge_enable" value="0"<!-- IF not MEMBERONBOARDING_FIRST_BADGE --> checked="checked"<!-- ENDIF --> /> {L_NO}</label>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>
+                <label for="memberonboarding_first_badge_title">{L_ACP_MEMBERONBOARDING_FIRST_BADGE_TITLE}</label><br>
+                <span>{L_ACP_MEMBERONBOARDING_FIRST_BADGE_TITLE_EXPLAIN}</span>
+            </dt>
+            <dd>
+                <input type="text" id="memberonboarding_first_badge_title" name="memberonboarding_first_badge_title" value="{MEMBERONBOARDING_FIRST_BADGE_TITLE}" size="60" maxlength="255" />
+            </dd>
+        </dl>
+    </fieldset>
+
+    <!-- IF S_MEMBERONBOARDING_HAS_ALERTS -->
+    <fieldset>
+        <legend>{L_ACP_MEMBERONBOARDING_STAFF_PANEL}</legend>
+        <p>{L_ACP_MEMBERONBOARDING_STAFF_PANEL_EXPLAIN}</p>
+
+        <table class="table1 zebra-table">
+            <thead>
+                <tr>
+                    <th>{L_USERNAME}</th>
+                    <th>{L_ACP_MEMBERONBOARDING_ATTENTION}</th>
+                    <th>{L_ACP_MEMBERONBOARDING_CURRENT_STEP}</th>
+                    <th>{L_ACP_MEMBERONBOARDING_LEVEL}</th>
+                    <th>{L_ACP_MEMBERONBOARDING_PROGRESS}</th>
+                    <th>{L_ACP_MEMBERONBOARDING_LAST_MOVEMENT}</th>
+                    <th>{L_ACP_MEMBERONBOARDING_WELCOME_PM_STATUS}</th>
+                    <th>{L_ACP_MEMBERONBOARDING_STARTED}</th>
+                </tr>
+            </thead>
+            <tbody>
+            <!-- BEGIN staff_alert_member -->
+                <tr class="{staff_alert_member.ROW_CLASS}">
+                    <td>{staff_alert_member.USERNAME_FULL}</td>
+                    <td><span class="memberonboarding-chip {staff_alert_member.ATTENTION_CLASS}">{staff_alert_member.ATTENTION_TEXT}</span></td>
+                    <td>{staff_alert_member.CURRENT_STEP}</td>
+                    <td><span class="memberonboarding-chip {staff_alert_member.LEVEL_CLASS}">{staff_alert_member.LEVEL}</span></td>
+                    <td class="memberonboarding-progresscell">
+                        <div class="memberonboarding-progressbar"><span style="width:{staff_alert_member.PROGRESS_WIDTH}%;"></span></div>
+                        <span class="memberonboarding-muted">{staff_alert_member.PERCENT}%</span>
+                    </td>
+                    <td>{staff_alert_member.LAST_MOVEMENT}</td>
+                    <td><span class="memberonboarding-chip {staff_alert_member.PM_STATUS_CLASS}">{staff_alert_member.PM_STATUS}</span></td>
+                    <td>{staff_alert_member.STARTED_TIME}</td>
+                </tr>
+            <!-- END staff_alert_member -->
+            </tbody>
+        </table>
+    </fieldset>
+    <!-- ENDIF -->
+
+    <fieldset>
+        <legend>{L_ACP_MEMBERONBOARDING_STATS}</legend>
+        <p>{L_ACP_MEMBERONBOARDING_STATS_EXPLAIN}</p>
+
+        <dl>
+            <dt><label>{L_ACP_MEMBERONBOARDING_MEMBERS_TOTAL}</label></dt>
+            <dd><strong>{MEMBERONBOARDING_MEMBERS_TOTAL}</strong></dd>
+        </dl>
+
+        <dl>
+            <dt><label>{L_ACP_MEMBERONBOARDING_MEMBERS_DONE}</label></dt>
+            <dd><strong>{MEMBERONBOARDING_MEMBERS_DONE}</strong></dd>
+        </dl>
+
+        <dl>
+            <dt><label>{L_ACP_MEMBERONBOARDING_MEMBERS_PENDING}</label></dt>
+            <dd><strong>{MEMBERONBOARDING_MEMBERS_PENDING}</strong></dd>
+        </dl>
+
+        <dl>
+            <dt><label>{L_ACP_MEMBERONBOARDING_COMPLETION_RATE}</label></dt>
+            <dd><strong>{MEMBERONBOARDING_COMPLETION_RATE}%</strong></dd>
+        </dl>
+
+        <dl>
+            <dt><label>{L_ACP_MEMBERONBOARDING_MEMBERS_REWARDED}</label></dt>
+            <dd><strong>{MEMBERONBOARDING_MEMBERS_REWARDED}</strong></dd>
+        </dl>
+    </fieldset>
+
+    <fieldset>
+        <legend>{L_ACP_MEMBERONBOARDING_LEVEL_DISTRIBUTION}</legend>
+        <p>{L_ACP_MEMBERONBOARDING_LEVEL_DISTRIBUTION_EXPLAIN}</p>
+
+        <dl>
+            <dt><label>{L_MEMBERONBOARDING_LEVEL_NEW}</label></dt>
+            <dd><strong>{MEMBERONBOARDING_LEVEL_NEW_COUNT}</strong></dd>
+        </dl>
+
+        <dl>
+            <dt><label>{L_MEMBERONBOARDING_LEVEL_INTEGRATED}</label></dt>
+            <dd><strong>{MEMBERONBOARDING_LEVEL_INTEGRATED_COUNT}</strong></dd>
+        </dl>
+
+        <dl>
+            <dt><label>{L_MEMBERONBOARDING_LEVEL_ACTIVE}</label></dt>
+            <dd><strong>{MEMBERONBOARDING_LEVEL_ACTIVE_COUNT}</strong></dd>
+        </dl>
+    </fieldset>
+
+    <fieldset>
+        <legend>{L_ACP_MEMBERONBOARDING_RECENT_MEMBERS}</legend>
+        <p>{L_ACP_MEMBERONBOARDING_RECENT_MEMBERS_EXPLAIN}</p>
+        <p><strong>{L_ACP_MEMBERONBOARDING_RECENT_LIMIT_NOTE}</strong></p>
+
+        <!-- IF S_MEMBERONBOARDING_HAS_RECENT -->
+        <table class="table1 zebra-table">
+            <thead>
+                <tr>
+                    <th>{L_USERNAME}</th>
+                    <th>{L_ACP_MEMBERONBOARDING_ATTENTION}</th>
+                    <th>{L_ACP_MEMBERONBOARDING_CURRENT_STEP}</th>
+                    <th>{L_ACP_MEMBERONBOARDING_PROGRESS}</th>
+                    <th>{L_ACP_MEMBERONBOARDING_LEVEL}</th>
+                    <th>{L_ACP_MEMBERONBOARDING_STATUS}</th>
+                    <th>{L_ACP_MEMBERONBOARDING_WELCOME_PM_STATUS}</th>
+                    <th>{L_ACP_MEMBERONBOARDING_BADGE_STATUS}</th>
+                    <th>{L_ACP_MEMBERONBOARDING_LAST_MOVEMENT}</th>
+                    <th>{L_ACP_MEMBERONBOARDING_STARTED}</th>
+                    <th>{L_ACP_MEMBERONBOARDING_UPDATED}</th>
+                </tr>
+            </thead>
+            <tbody>
+            <!-- BEGIN recent_member -->
+                <tr class="{recent_member.ROW_CLASS}">
+                    <td>{recent_member.USERNAME_FULL}</td>
+                    <td><span class="memberonboarding-chip {recent_member.ATTENTION_CLASS}">{recent_member.ATTENTION_TEXT}</span></td>
+                    <td>{recent_member.CURRENT_STEP}</td>
+                    <td class="memberonboarding-progresscell">
+                        <div class="memberonboarding-progressbar"><span style="width:{recent_member.PROGRESS_WIDTH}%;"></span></div>
+                        <span class="memberonboarding-muted">{recent_member.PERCENT}%</span>
+                    </td>
+                    <td><span class="memberonboarding-chip {recent_member.LEVEL_CLASS}">{recent_member.LEVEL}</span></td>
+                    <td><span class="memberonboarding-chip {recent_member.STATUS_CLASS}">{recent_member.STATUS_TEXT}</span></td>
+                    <td>
+                        <span class="memberonboarding-chip {recent_member.PM_STATUS_CLASS}">{recent_member.PM_STATUS_TEXT}</span>
+                        <div class="memberonboarding-muted">{recent_member.PM_TIME}</div>
+                    </td>
+                    <td>
+                        <span class="memberonboarding-chip {recent_member.BADGE_STATUS_CLASS}">{recent_member.BADGE_STATUS_TEXT}</span>
+                        <div class="memberonboarding-muted">{recent_member.BADGE_TITLE}</div>
+                    </td>
+                    <td>{recent_member.LAST_MOVEMENT}</td>
+                    <td>{recent_member.STARTED_TIME}</td>
+                    <td>{recent_member.UPDATED_TIME}</td>
+                </tr>
+            <!-- END recent_member -->
+            </tbody>
+        </table>
+        <!-- ELSE -->
+        <p>{L_ACP_MEMBERONBOARDING_NO_RECENT_MEMBERS}</p>
+        <!-- ENDIF -->
+    </fieldset>
+
+    <fieldset class="submit-buttons">
+        <input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />
+        {S_FORM_TOKEN}
+    </fieldset>
+</form>
+
+<!-- INCLUDE overall_footer.html -->

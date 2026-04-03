@@ -1,0 +1,53 @@
+<!-- IF S_MEMBERONBOARDING_SHOW -->
+<div class="panel memberonboarding-widget">
+    <div class="inner">
+        <div class="memberonboarding-widget__head">
+            <div>
+                <div class="memberonboarding-kicker">{L_MEMBERONBOARDING_WIDGET_KICKER}</div>
+                <h3>{L_MEMBERONBOARDING_WIDGET_TITLE}</h3>
+                <p>{L_MEMBERONBOARDING_WIDGET_EXPLAIN}</p>
+            </div>
+            <div class="memberonboarding-widget__percent">{MEMBERONBOARDING_PERCENT}%</div>
+        </div>
+
+        <div class="memberonboarding-progressbar memberonboarding-progressbar--compact">
+            <span style="width: {MEMBERONBOARDING_PERCENT}%;"></span>
+        </div>
+        <div class="memberonboarding-widget__meta">
+            <span class="memberonboarding-chip memberonboarding-chip--status">{MEMBERONBOARDING_WELCOME_STATUS}</span>
+            <span class="memberonboarding-chip memberonboarding-chip--level">{MEMBERONBOARDING_LEVEL_LABEL}</span>
+            <span class="memberonboarding-chip">{MEMBERONBOARDING_PROGRESS_TEXT}</span>
+        </div>
+
+        <div class="memberonboarding-widget__next memberonboarding-widget__next--level">{MEMBERONBOARDING_NEXT_LEVEL_TEXT}</div>
+
+        <!-- IF S_MEMBERONBOARDING_HAS_NEXT_STEP -->
+        <div class="memberonboarding-widget__next">
+            <strong>{L_MEMBERONBOARDING_RECOMMENDED_ACTION}:</strong> {MEMBERONBOARDING_NEXT_STEP_TITLE}
+            <div>{MEMBERONBOARDING_NEXT_STEP_DESC}</div>
+            <div class="memberonboarding-widget__reason">{MEMBERONBOARDING_RECOMMENDED_ACTION_REASON}</div>
+        </div>
+        <!-- ENDIF -->
+
+        <div class="memberonboarding-widget__list">
+            <!-- BEGIN memberonboarding_widget_task -->
+            <div class="memberonboarding-widget__item<!-- IF memberonboarding_widget_task.S_TASK_DONE --> is-done<!-- ENDIF -->">
+                <div class="memberonboarding-widget__bullet"><!-- IF memberonboarding_widget_task.S_TASK_DONE -->✓<!-- ELSE -->○<!-- ENDIF --></div>
+                <div class="memberonboarding-widget__content">
+                    <strong>{memberonboarding_widget_task.TASK_TITLE}</strong>
+                    <div>{memberonboarding_widget_task.TASK_DESC}</div>
+                </div>
+                <div class="memberonboarding-widget__status">{memberonboarding_widget_task.TASK_STATUS}</div>
+            </div>
+            <!-- END memberonboarding_widget_task -->
+        </div>
+
+        <div class="memberonboarding-actions">
+            <!-- IF S_MEMBERONBOARDING_HAS_NEXT_STEP -->
+            <a class="button1 memberonboarding-button" href="{U_MEMBERONBOARDING_NEXT_STEP}">{MEMBERONBOARDING_RECOMMENDED_ACTION_LABEL}</a>
+            <!-- ENDIF -->
+            <a class="button2 memberonboarding-button" href="{U_MEMBERONBOARDING_PAGE}">{L_MEMBERONBOARDING_OPEN_PAGE}</a>
+        </div>
+    </div>
+</div>
+<!-- ENDIF -->

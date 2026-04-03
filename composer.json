@@ -1,0 +1,30 @@
+{
+    "name": "mundophpbb/memberonboarding",
+    "type": "phpbb-extension",
+    "description": "Member onboarding extension for phpBB.",
+    "homepage": "https://mundophpbb.com.br",
+    "version": "1.2.1",
+    "time": "2026-04-03 20:30:00",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Mundo phpBB",
+            "homepage": "https://mundophpbb.com.br",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.1"
+    },
+    "extra": {
+        "display-name": "Member Onboarding",
+        "soft-require": {
+            "phpbb/phpbb": ">=3.3.0,<3.4.0@dev"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "mundophpbb\\memberonboarding\\": ""
+        }
+    }
+}

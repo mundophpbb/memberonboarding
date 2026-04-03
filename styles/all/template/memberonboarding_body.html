@@ -1,0 +1,211 @@
+<!-- INCLUDE overall_header.html -->
+
+<div class="memberonboarding-page">
+    <div class="memberonboarding-hero panel">
+        <div class="inner">
+            <div class="memberonboarding-hero__grid">
+                <div class="memberonboarding-hero__content">
+                    <div class="memberonboarding-kicker">{MEMBERONBOARDING_WELCOME_KICKER}</div>
+                    <h2 class="memberonboarding-hero__title">{L_MEMBERONBOARDING_PAGE_TITLE}</h2>
+                    <p class="memberonboarding-hero__text">{MEMBERONBOARDING_WELCOME_TEXT}</p>
+
+                    <div class="memberonboarding-meta">
+                        <span class="memberonboarding-chip memberonboarding-chip--status">{MEMBERONBOARDING_WELCOME_STATUS}</span>
+                        <span class="memberonboarding-chip memberonboarding-chip--level">{MEMBERONBOARDING_LEVEL_LABEL}</span>
+                        <span class="memberonboarding-chip">{MEMBERONBOARDING_PROGRESS_TEXT}</span>
+                        <span class="memberonboarding-chip">{MEMBERONBOARDING_WELCOME_GOAL}</span>
+                    </div>
+
+                    <div class="memberonboarding-actions">
+                        <!-- IF S_MEMBERONBOARDING_HAS_NEXT_STEP -->
+                        <a class="button1 memberonboarding-button" href="{U_MEMBERONBOARDING_NEXT_STEP}">{MEMBERONBOARDING_RECOMMENDED_ACTION_LABEL}</a>
+                        <!-- ENDIF -->
+                        <a class="button2 memberonboarding-button" href="{U_MEMBERONBOARDING_PROFILE}">{L_MEMBERONBOARDING_OPEN_PROFILE}</a>
+                        <a class="button2 memberonboarding-button" href="{U_MEMBERONBOARDING_BOARD}">{L_MEMBERONBOARDING_BACK_TO_BOARD}</a>
+                    </div>
+                </div>
+
+                <div class="memberonboarding-progresscard">
+                    <div class="memberonboarding-progresscard__label">{L_MEMBERONBOARDING_PROGRESS}</div>
+                    <div class="memberonboarding-progresscard__value">{MEMBERONBOARDING_PERCENT}<span>%</span></div>
+                    <div class="memberonboarding-progressbar">
+                        <span style="width: {MEMBERONBOARDING_PERCENT}%;"></span>
+                    </div>
+                    <div class="memberonboarding-progresscard__text">{MEMBERONBOARDING_PROGRESS_TEXT}</div>
+
+                    <div class="memberonboarding-levelmeta">
+                        <div class="memberonboarding-levelmeta__item">
+                            <div class="memberonboarding-levelmeta__label">{L_MEMBERONBOARDING_LEVEL_CURRENT}</div>
+                            <div class="memberonboarding-levelmeta__value">{MEMBERONBOARDING_LEVEL_LABEL}</div>
+                            <div class="memberonboarding-levelmeta__text">{MEMBERONBOARDING_LEVEL_RANGE}</div>
+                        </div>
+                        <div class="memberonboarding-levelmeta__item">
+                            <div class="memberonboarding-levelmeta__label">{L_MEMBERONBOARDING_LEVEL_NEXT}</div>
+                            <!-- IF S_MEMBERONBOARDING_HAS_NEXT_LEVEL -->
+                            <div class="memberonboarding-levelmeta__value">{MEMBERONBOARDING_NEXT_LEVEL_LABEL}</div>
+                            <div class="memberonboarding-levelmeta__text">{MEMBERONBOARDING_NEXT_LEVEL_TEXT}</div>
+                            <!-- ELSE -->
+                            <div class="memberonboarding-levelmeta__value">{MEMBERONBOARDING_LEVEL_LABEL}</div>
+                            <div class="memberonboarding-levelmeta__text">{MEMBERONBOARDING_NEXT_LEVEL_TEXT}</div>
+                            <!-- ENDIF -->
+                        </div>
+                    </div>
+
+                    <!-- IF S_MEMBERONBOARDING_HAS_NEXT_STEP -->
+                    <div class="memberonboarding-nextstep">
+                        <div class="memberonboarding-nextstep__label">{L_MEMBERONBOARDING_RECOMMENDED_ACTION}</div>
+                        <div class="memberonboarding-nextstep__title">{MEMBERONBOARDING_NEXT_STEP_TITLE}</div>
+                        <div class="memberonboarding-nextstep__desc">{MEMBERONBOARDING_NEXT_STEP_DESC}</div>
+                        <div class="memberonboarding-nextstep__reason">{MEMBERONBOARDING_RECOMMENDED_ACTION_REASON}</div>
+                    </div>
+                    <!-- ENDIF -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- IF S_MEMBERONBOARDING_IS_COMPLETED -->
+    <div class="successbox">
+        <p>{L_MEMBERONBOARDING_COMPLETED_MESSAGE}</p>
+    </div>
+    <!-- ENDIF -->
+
+    <!-- IF S_MEMBERONBOARDING_HAS_REWARD -->
+    <div class="panel memberonboarding-rewardcard">
+        <div class="inner">
+            <div class="memberonboarding-rewardcard__icon">★</div>
+            <div class="memberonboarding-rewardcard__body">
+                <div class="memberonboarding-kicker">{L_MEMBERONBOARDING_REWARD_UNLOCKED}</div>
+                <h3>{MEMBERONBOARDING_REWARD_TITLE}</h3>
+                <p>{L_MEMBERONBOARDING_REWARD_EXPLAIN}</p>
+                <div class="memberonboarding-meta">
+                    <span class="memberonboarding-chip memberonboarding-chip--reward">{L_MEMBERONBOARDING_DONE}</span>
+                    <span class="memberonboarding-chip">{MEMBERONBOARDING_REWARD_TIME}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ENDIF -->
+
+    <div class="panel memberonboarding-levelscard">
+        <div class="inner">
+            <div class="memberonboarding-sectionhead memberonboarding-sectionhead--tight">
+                <h3>{L_MEMBERONBOARDING_LEVELS_TITLE}</h3>
+                <p>{L_MEMBERONBOARDING_LEVELS_EXPLAIN}</p>
+            </div>
+            <div class="memberonboarding-levelsgrid">
+                <!-- BEGIN activation_level -->
+                <div class="memberonboarding-levelbox<!-- IF activation_level.S_CURRENT --> is-current<!-- ENDIF -->">
+                    <div class="memberonboarding-levelbox__label">{activation_level.LEVEL_LABEL}</div>
+                    <div class="memberonboarding-levelbox__range">{activation_level.LEVEL_RANGE}</div>
+                    <!-- IF activation_level.S_CURRENT -->
+                    <div class="memberonboarding-levelbox__current">{L_MEMBERONBOARDING_LEVEL_CURRENT}</div>
+                    <!-- ENDIF -->
+                </div>
+                <!-- END activation_level -->
+            </div>
+        </div>
+    </div>
+
+    <div class="memberonboarding-layout">
+        <div class="memberonboarding-main panel">
+            <div class="inner">
+                <div class="memberonboarding-sectionhead">
+                    <h3>{L_MEMBERONBOARDING_TASKS_TITLE}</h3>
+                    <p>{L_MEMBERONBOARDING_TASKS_EXPLAIN}</p>
+                </div>
+
+                <!-- IF S_MEMBERONBOARDING_HAS_PENDING_TASKS -->
+                <div class="memberonboarding-tasklist">
+                    <!-- BEGIN memberonboarding_pending_task -->
+                    <div class="memberonboarding-taskcard">
+                        <div class="memberonboarding-taskcard__status">
+                            <span class="memberonboarding-taskcard__icon">○</span>
+                        </div>
+                        <div class="memberonboarding-taskcard__body">
+                            <div class="memberonboarding-taskcard__title">{memberonboarding_pending_task.TASK_TITLE}</div>
+                            <div class="memberonboarding-taskcard__desc">{memberonboarding_pending_task.TASK_DESC}</div>
+                        </div>
+                        <div class="memberonboarding-taskcard__aside">
+                            <span class="memberonboarding-pill memberonboarding-pill--pending">{memberonboarding_pending_task.TASK_STATUS}</span>
+                            <a class="button2 memberonboarding-button memberonboarding-button--small" href="{memberonboarding_pending_task.TASK_URL}">{L_MEMBERONBOARDING_OPEN_TASK}</a>
+                        </div>
+                    </div>
+                    <!-- END memberonboarding_pending_task -->
+                </div>
+                <!-- ELSE -->
+                <div class="memberonboarding-tasklist memberonboarding-tasklist--empty">
+                    <div class="memberonboarding-taskcard is-done">
+                        <div class="memberonboarding-taskcard__status">
+                            <span class="memberonboarding-taskcard__icon">✓</span>
+                        </div>
+                        <div class="memberonboarding-taskcard__body">
+                            <div class="memberonboarding-taskcard__title">{L_MEMBERONBOARDING_ALL_PENDING_DONE_TITLE}</div>
+                            <div class="memberonboarding-taskcard__desc">{L_MEMBERONBOARDING_ALL_PENDING_DONE_EXPLAIN}</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ENDIF -->
+
+                <!-- IF S_MEMBERONBOARDING_HAS_COMPLETED_TASKS -->
+                <div class="memberonboarding-completed">
+                    <div class="memberonboarding-completed__head">
+                        <h4>{L_MEMBERONBOARDING_COMPLETED_TASKS_TITLE}</h4>
+                        <span class="memberonboarding-chip">{MEMBERONBOARDING_COMPLETED_TASKS} {L_MEMBERONBOARDING_DONE}</span>
+                    </div>
+                    <div class="memberonboarding-completed__list">
+                        <!-- BEGIN memberonboarding_completed_task -->
+                        <div class="memberonboarding-taskcard memberonboarding-taskcard--compact is-done">
+                            <div class="memberonboarding-taskcard__status">
+                                <span class="memberonboarding-taskcard__icon">✓</span>
+                            </div>
+                            <div class="memberonboarding-taskcard__body">
+                                <div class="memberonboarding-taskcard__title">{memberonboarding_completed_task.TASK_TITLE}</div>
+                                <div class="memberonboarding-taskcard__desc">{memberonboarding_completed_task.TASK_DESC}</div>
+                            </div>
+                            <div class="memberonboarding-taskcard__aside">
+                                <span class="memberonboarding-pill memberonboarding-pill--done">{memberonboarding_completed_task.TASK_STATUS}</span>
+                            </div>
+                        </div>
+                        <!-- END memberonboarding_completed_task -->
+                    </div>
+                </div>
+                <!-- ENDIF -->
+            </div>
+        </div>
+
+        <div class="memberonboarding-sidebar">
+            <!-- IF S_MEMBERONBOARDING_HAS_RECOMMENDED -->
+            <div class="panel memberonboarding-sidecard">
+                <div class="inner">
+                    <div class="memberonboarding-sectionhead memberonboarding-sectionhead--tight">
+                        <h3>{L_MEMBERONBOARDING_RECOMMENDED_FORUMS}</h3>
+                        <p>{L_MEMBERONBOARDING_RECOMMENDED_FORUMS_EXPLAIN}</p>
+                    </div>
+                    <ul class="memberonboarding-recommended">
+                        <!-- BEGIN recommended_forum -->
+                        <li>{recommended_forum.FORUM_NAME}</li>
+                        <!-- END recommended_forum -->
+                    </ul>
+                </div>
+            </div>
+            <!-- ENDIF -->
+
+            <div class="panel memberonboarding-sidecard">
+                <div class="inner">
+                    <div class="memberonboarding-sectionhead memberonboarding-sectionhead--tight">
+                        <h3>{L_MEMBERONBOARDING_TIPS_TITLE}</h3>
+                        <p>{L_MEMBERONBOARDING_TIPS_EXPLAIN}</p>
+                    </div>
+                    <ul class="memberonboarding-recommended memberonboarding-recommended--tips">
+                        <li>{L_MEMBERONBOARDING_TIP_ONE}</li>
+                        <li>{L_MEMBERONBOARDING_TIP_TWO}</li>
+                        <li>{L_MEMBERONBOARDING_TIP_THREE}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- INCLUDE overall_footer.html -->

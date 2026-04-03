@@ -1,0 +1,4 @@
+mundophpbb_memberonboarding_main:
+    path: /member-onboarding
+    defaults:
+        _controller: mundophpbb.memberonboarding.main_controller:handle
