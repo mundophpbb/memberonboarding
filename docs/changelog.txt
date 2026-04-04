@@ -1,0 +1,15 @@
+CHANGELOG RESUMIDO
+
+v1.2.1
+- consolidação do pacote atual
+- inclusão de documentação rápida
+- preparação para uso e manutenção
+
+v1.2.0
+- checklist funcional
+- visão da staff no ACP
+- PM automática de boas-vindas
+- regras de perfil configuráveis
+- faixa de ativação
+- recompensa inicial
+- melhorias visuais e ajustes de robustez

@@ -1,0 +1,37 @@
+MANUAL RÁPIDO — MEMBER ONBOARDING
+
+1. O que a extensão faz
+A extensão cria uma jornada inicial para novos membros do fórum, com checklist, progresso, recomendação de próxima ação, mensagem de boas-vindas, acompanhamento pela staff e recompensa simples ao concluir a ativação.
+
+2. Onde configurar
+ACP > Extensões > Onboarding de Membros
+
+3. Configurações principais
+- Ativar extensão: liga ou desliga a lógica principal.
+- Checklist inicial: ativa ou desativa o checklist da jornada.
+- Widget no índice: mostra o bloco de onboarding na página inicial do fórum.
+- Link na navegação: adiciona acesso direto à página da jornada.
+- PM de boas-vindas: envia mensagem privada automática no cadastro.
+- Avisos para staff: mostra uma visão enxuta de atenção no ACP.
+- Fóruns recomendados: lista de áreas sugeridas ao novo membro.
+- Critério do perfil básico: define quais campos contam como “perfil preenchido”.
+- Limite de acompanhamento recente: evita listas muito grandes no ACP.
+- Faixas de ativação: percentuais de corte para Integrado e Ativo.
+- Recompensa inicial: concede uma conquista simples ao concluir 100%.
+
+4. Placeholders da mensagem de boas-vindas
+- {USERNAME}
+- {BOARD_URL}
+- {ONBOARDING_URL}
+
+5. Fluxo recomendado de teste
+- Criar um novo usuário de teste
+- Confirmar o envio da PM
+- Abrir a página de onboarding
+- Completar perfil / personalização / primeira postagem / primeiro tópico
+- Verificar barra de progresso, nível e recompensa
+- Conferir o ACP no bloco de acompanhamento recente
+
+6. Observações
+- Se nenhum campo de perfil for selecionado no ACP, esse critério fica desativado.
+- O pacote foi mantido propositalmente enxuto para não inflar o módulo da extensão.

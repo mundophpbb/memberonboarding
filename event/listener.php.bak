@@ -89,7 +89,7 @@ class listener implements EventSubscriberInterface
         }
 
         $show_nav = !empty($this->config['memberonboarding_nav_link']);
-        $show_widget = $this->manager->is_checklist_enabled() && !empty($this->config['memberonboarding_index_widget']) && !$summary['is_completed'];
+        $show_widget = !empty($this->config['memberonboarding_index_widget']) && !$summary['is_completed'];
         $page_url = $this->helper->route('mundophpbb_memberonboarding_main');
         $recommended_action = !empty($summary['recommended_action']) && is_array($summary['recommended_action']) ? $summary['recommended_action'] : [];
 

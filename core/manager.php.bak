@@ -51,12 +51,7 @@ class manager
 
     public function is_enabled()
     {
-        return !empty($this->config['memberonboarding_enable']);
-    }
-
-    public function is_checklist_enabled()
-    {
-        return $this->is_enabled() && !empty($this->config['memberonboarding_checklist_enable']);
+        return !empty($this->config['memberonboarding_enable']) && !empty($this->config['memberonboarding_checklist_enable']);
     }
 
     public function handle_new_user($user_id, array $user_row = [])
@@ -170,11 +165,6 @@ class manager
 
     public function get_tasks(array $user_row)
     {
-        if (!$this->is_checklist_enabled())
-        {
-            return [];
-        }
-
         $tasks_table = $this->table_prefix . 'memberonboarding_tasks';
         $task_rows = [];
         $user_id = (int) $user_row['user_id'];
