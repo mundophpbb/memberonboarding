@@ -107,22 +107,22 @@ class acp_controller
             $level_integrated_min = min(99, max(1, (int) $level_integrated_min));
             $level_active_min = min(100, max($level_integrated_min + 1, (int) $level_active_min));
 
-            $this->config->set('memberonboarding_enable', $enable);
-            $this->config->set('memberonboarding_welcome_pm', $welcome_pm);
-            $this->config->set('memberonboarding_staff_alert', $staff_alert);
-            $this->config->set('memberonboarding_checklist_enable', $checklist_enable);
-            $this->config->set('memberonboarding_recommend_forums', $recommend_forums);
-            $this->config->set('memberonboarding_first_badge_enable', $first_badge_enable);
-            $this->config->set('memberonboarding_index_widget', $index_widget);
-            $this->config->set('memberonboarding_nav_link', $nav_link);
-            $this->config->set('memberonboarding_welcome_subject', $welcome_subject);
+            $this->set_config_value('memberonboarding_enable', $enable);
+            $this->set_config_value('memberonboarding_welcome_pm', $welcome_pm);
+            $this->set_config_value('memberonboarding_staff_alert', $staff_alert);
+            $this->set_config_value('memberonboarding_checklist_enable', $checklist_enable);
+            $this->set_config_value('memberonboarding_recommend_forums', $recommend_forums);
+            $this->set_config_value('memberonboarding_first_badge_enable', $first_badge_enable);
+            $this->set_config_value('memberonboarding_index_widget', $index_widget);
+            $this->set_config_value('memberonboarding_nav_link', $nav_link);
+            $this->set_config_value('memberonboarding_welcome_subject', $welcome_subject);
             $this->set_text_config('memberonboarding_welcome_message', $welcome_message);
-            $this->config->set('memberonboarding_profile_required_builtin', implode(',', $profile_builtin));
-            $this->config->set('memberonboarding_profile_required_custom', implode(',', $profile_custom));
-            $this->config->set('memberonboarding_recent_limit', $recent_limit);
-            $this->config->set('memberonboarding_first_badge_title', $first_badge_title);
-            $this->config->set('memberonboarding_level_integrated_min', $level_integrated_min);
-            $this->config->set('memberonboarding_level_active_min', $level_active_min);
+            $this->set_config_value('memberonboarding_profile_required_builtin', implode(',', $profile_builtin));
+            $this->set_config_value('memberonboarding_profile_required_custom', implode(',', $profile_custom));
+            $this->set_config_value('memberonboarding_recent_limit', $recent_limit);
+            $this->set_config_value('memberonboarding_first_badge_title', $first_badge_title);
+            $this->set_config_value('memberonboarding_level_integrated_min', $level_integrated_min);
+            $this->set_config_value('memberonboarding_level_active_min', $level_active_min);
 
             $this->log->add(
                 'admin',
@@ -351,6 +351,37 @@ class acp_controller
         }
 
         return $this->language->lang('ACP_MEMBERONBOARDING_DAYS_AGO', $days);
+    }
+
+
+    protected function set_config_value($key, $value)
+    {
+        $key = (string) $key;
+        $value = (string) $value;
+
+        if (isset($this->config[$key]))
+        {
+            $this->config->set($key, $value);
+            return;
+        }
+
+        $sql = "SELECT config_name
+            FROM " . $this->table_prefix . "config
+            WHERE config_name = '" . $this->db->sql_escape($key) . "'";
+        $result = $this->db->sql_query_limit($sql, 1);
+        $exists = (bool) $this->db->sql_fetchfield('config_name');
+        $this->db->sql_freeresult($result);
+
+        if ($exists)
+        {
+            $sql = "UPDATE " . $this->table_prefix . "config
+                SET config_value = '" . $this->db->sql_escape($value) . "'
+                WHERE config_name = '" . $this->db->sql_escape($key) . "'";
+            $this->db->sql_query($sql);
+            return;
+        }
+
+        $this->config->set($key, $value);
     }
 
     protected function get_welcome_subject_value()
