@@ -397,20 +397,6 @@ class manager
         return min(50, max(5, $limit));
     }
 
-    public function user_has_completion_reward($user_id)
-    {
-        $user_id = (int) $user_id;
-
-        if ($user_id <= 0 || !$this->is_enabled() || !$this->has_reward_flow() || empty($this->config['memberonboarding_first_badge_enable']))
-        {
-            return false;
-        }
-
-        $progress_row = $this->get_progress_row($user_id);
-
-        return !empty($progress_row['reward_granted']);
-    }
-
     public function get_builtin_profile_fields()
     {
         return [
@@ -439,11 +425,71 @@ class manager
                 continue;
             }
 
-            $fields['pf_' . (string) $row['field_ident']] = (string) $row['field_ident'];
+            $field_ident = (string) $row['field_ident'];
+            $fields['pf_' . $field_ident] = $this->get_custom_profile_field_label($field_ident);
         }
         $this->db->sql_freeresult($result);
 
         return $fields;
+    }
+
+    protected function get_custom_profile_field_label($field_ident)
+    {
+        $field_ident = (string) $field_ident;
+        $known = [
+            'phpbb_real_name'  => 'ACP_MEMBERONBOARDING_PROFILE_FIELD_REAL_NAME',
+            'phpbb_location'   => 'ACP_MEMBERONBOARDING_PROFILE_FIELD_LOCATION',
+            'phpbb_occupation' => 'ACP_MEMBERONBOARDING_PROFILE_FIELD_OCCUPATION',
+            'phpbb_interests'  => 'ACP_MEMBERONBOARDING_PROFILE_FIELD_INTERESTS',
+            'phpbb_website'    => 'ACP_MEMBERONBOARDING_PROFILE_FIELD_WEBSITE',
+            'phpbb_facebook'   => 'ACP_MEMBERONBOARDING_PROFILE_FIELD_FACEBOOK',
+            'phpbb_twitter'    => 'ACP_MEMBERONBOARDING_PROFILE_FIELD_TWITTER',
+            'phpbb_skype'      => 'ACP_MEMBERONBOARDING_PROFILE_FIELD_SKYPE',
+            'phpbb_youtube'    => 'ACP_MEMBERONBOARDING_PROFILE_FIELD_YOUTUBE',
+        ];
+
+        if (isset($known[$field_ident]))
+        {
+            return $this->language->lang($known[$field_ident]) . $this->language->lang('ACP_MEMBERONBOARDING_PROFILE_FIELD_CUSTOM_SUFFIX');
+        }
+
+        return utf8_ucfirst(str_replace('_', ' ', $field_ident)) . $this->language->lang('ACP_MEMBERONBOARDING_PROFILE_FIELD_CUSTOM_SUFFIX');
+    }
+
+    protected function get_profile_field_equivalents()
+    {
+        return [
+            'user_from'            => ['user_from', 'pf_phpbb_location'],
+            'pf_phpbb_location'    => ['user_from', 'pf_phpbb_location'],
+            'user_occ'             => ['user_occ', 'pf_phpbb_occupation'],
+            'pf_phpbb_occupation'  => ['user_occ', 'pf_phpbb_occupation'],
+            'user_interests'       => ['user_interests', 'pf_phpbb_interests'],
+            'pf_phpbb_interests'   => ['user_interests', 'pf_phpbb_interests'],
+            'user_website'         => ['user_website', 'pf_phpbb_website'],
+            'pf_phpbb_website'     => ['user_website', 'pf_phpbb_website'],
+        ];
+    }
+
+    protected function expand_profile_field_equivalents(array $fields)
+    {
+        $map = $this->get_profile_field_equivalents();
+        $expanded = [];
+
+        foreach ($fields as $field)
+        {
+            $field = (string) $field;
+            $expanded[] = $field;
+
+            if (isset($map[$field]))
+            {
+                foreach ($map[$field] as $equivalent)
+                {
+                    $expanded[] = (string) $equivalent;
+                }
+            }
+        }
+
+        return array_values(array_unique($expanded));
     }
 
     public function get_selected_builtin_profile_fields()
@@ -989,7 +1035,7 @@ class manager
 
     protected function has_profile_details(array $user_row)
     {
-        $fields = $this->get_selected_profile_fields();
+        $fields = $this->expand_profile_field_equivalents($this->get_selected_profile_fields());
 
         if (empty($fields))
         {
