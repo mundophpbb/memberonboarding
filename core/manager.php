@@ -397,6 +397,20 @@ class manager
         return min(50, max(5, $limit));
     }
 
+    public function user_has_completion_reward($user_id)
+    {
+        $user_id = (int) $user_id;
+
+        if ($user_id <= 0 || !$this->is_enabled() || !$this->has_reward_flow() || empty($this->config['memberonboarding_first_badge_enable']))
+        {
+            return false;
+        }
+
+        $progress_row = $this->get_progress_row($user_id);
+
+        return !empty($progress_row['reward_granted']);
+    }
+
     public function get_builtin_profile_fields()
     {
         return [
