@@ -111,7 +111,7 @@ class acp_controller
             $this->set_config_value('memberonboarding_welcome_pm', $welcome_pm);
             $this->set_config_value('memberonboarding_staff_alert', $staff_alert);
             $this->set_config_value('memberonboarding_checklist_enable', $checklist_enable);
-            $this->set_config_value('memberonboarding_recommend_forums', $recommend_forums);
+            $this->set_text_config('memberonboarding_recommend_forums', $recommend_forums);
             $this->set_config_value('memberonboarding_first_badge_enable', $first_badge_enable);
             $this->set_config_value('memberonboarding_index_widget', $index_widget);
             $this->set_config_value('memberonboarding_nav_link', $nav_link);
@@ -156,7 +156,7 @@ class acp_controller
             'MEMBERONBOARDING_WELCOME_PM'       => (int) $this->config['memberonboarding_welcome_pm'],
             'MEMBERONBOARDING_STAFF_ALERT'      => (int) $this->config['memberonboarding_staff_alert'],
             'MEMBERONBOARDING_CHECKLIST_ENABLE' => (int) $this->config['memberonboarding_checklist_enable'],
-            'MEMBERONBOARDING_RECOMMEND_FORUMS' => (string) $this->config['memberonboarding_recommend_forums'],
+            'MEMBERONBOARDING_RECOMMEND_FORUMS' => $this->get_recommend_forums_value(),
             'MEMBERONBOARDING_FIRST_BADGE'      => (int) $this->config['memberonboarding_first_badge_enable'],
             'MEMBERONBOARDING_INDEX_WIDGET'     => (int) $this->config['memberonboarding_index_widget'],
             'MEMBERONBOARDING_NAV_LINK'         => (int) $this->config['memberonboarding_nav_link'],
@@ -382,6 +382,19 @@ class acp_controller
         }
 
         $this->config->set($key, $value);
+    }
+
+
+    protected function get_recommend_forums_value()
+    {
+        $value = $this->get_text_config('memberonboarding_recommend_forums');
+
+        if ($value === '' && isset($this->config['memberonboarding_recommend_forums']))
+        {
+            $value = (string) $this->config['memberonboarding_recommend_forums'];
+        }
+
+        return (string) $value;
     }
 
     protected function get_welcome_subject_value()

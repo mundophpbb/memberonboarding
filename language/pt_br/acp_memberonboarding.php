@@ -30,7 +30,9 @@ $lang = array_merge($lang, [
     'ACP_MEMBERONBOARDING_WELCOME_SUBJECT_EXPLAIN' => 'Você pode personalizar o assunto. Se deixar o valor padrão, a extensão usa o texto inicial traduzido.',
 
     'ACP_MEMBERONBOARDING_WELCOME_MESSAGE' => 'Texto da mensagem de boas-vindas',
-    'ACP_MEMBERONBOARDING_WELCOME_MESSAGE_EXPLAIN' => 'Você pode usar os marcadores {USERNAME}, {BOARD_URL} e {ONBOARDING_URL}.',
+    'ACP_MEMBERONBOARDING_WELCOME_MESSAGE_EXPLAIN' => 'A mensagem de boas-vindas é enviada como mensagem privada. Você pode usar BBCode e também os marcadores {USERNAME}, {BOARD_URL} e {ONBOARDING_URL}.',
+    'ACP_MEMBERONBOARDING_WELCOME_PREVIEW' => 'Pré-visualização',
+    'ACP_MEMBERONBOARDING_WELCOME_PREVIEW_EXPLAIN' => 'Esta pré-visualização aparece no ACP e simula como a mensagem privada ficará com as tags BBCode mais comuns.',
 
     'ACP_MEMBERONBOARDING_STAFF_ALERT' => 'Ativar avisos para a staff',
     'ACP_MEMBERONBOARDING_STAFF_ALERT_EXPLAIN' => 'Mostra um painel de novos membros pendentes no ACP e prioriza os acompanhamentos em aberto.',
@@ -68,7 +70,7 @@ $lang = array_merge($lang, [
     'ACP_MEMBERONBOARDING_LEVEL_ACTIVE_MIN' => 'Percentual mínimo para “Ativo”',
     'ACP_MEMBERONBOARDING_LEVEL_ACTIVE_MIN_EXPLAIN' => 'Quando o membro atingir este percentual, ele passa para a faixa “Ativo”. Deve ser maior que o valor de “Integrado”.',
 
-    'ACP_MEMBERONBOARDING_RECOMMEND_FORUMS_EXPLAIN' => 'Lista separada por vírgula com nomes de áreas ou fóruns recomendados para novos membros.',
+    'ACP_MEMBERONBOARDING_RECOMMEND_FORUMS_EXPLAIN' => 'Use uma recomendação por linha. Você pode informar apenas o texto ou o formato Título | URL para criar links clicáveis para fóruns, tópicos ou guias.',
 
     'ACP_MEMBERONBOARDING_FIRST_BADGE' => 'Ativar medalha inicial',
     'ACP_MEMBERONBOARDING_FIRST_BADGE_EXPLAIN' => 'Registra automaticamente uma conquista interna quando o membro conclui 100% da jornada.',

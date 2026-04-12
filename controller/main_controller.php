@@ -132,10 +132,12 @@ class main_controller
             'MEMBERONBOARDING_COMPLETED_TASKS'       => $completed_tasks,
         ]);
 
-        foreach ($recommended as $forum_name)
+        foreach ($recommended as $item)
         {
             $this->template->assign_block_vars('recommended_forum', [
-                'FORUM_NAME' => $forum_name,
+                'FORUM_NAME' => $item['label'],
+                'U_FORUM'    => !empty($item['url']) ? $item['url'] : '',
+                'S_HAS_URL'  => !empty($item['url']),
             ]);
         }
 

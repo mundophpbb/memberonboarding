@@ -30,7 +30,9 @@ $lang = array_merge($lang, [
     'ACP_MEMBERONBOARDING_WELCOME_SUBJECT_EXPLAIN' => 'You can customize the subject. If you keep the default value, the extension uses the translated starter text.',
 
     'ACP_MEMBERONBOARDING_WELCOME_MESSAGE' => 'Welcome message text',
-    'ACP_MEMBERONBOARDING_WELCOME_MESSAGE_EXPLAIN' => 'You can use the placeholders {USERNAME}, {BOARD_URL} and {ONBOARDING_URL}.',
+    'ACP_MEMBERONBOARDING_WELCOME_MESSAGE_EXPLAIN' => 'The welcome message is sent as a private message. You can use BBCode plus the placeholders {USERNAME}, {BOARD_URL} and {ONBOARDING_URL}.',
+    'ACP_MEMBERONBOARDING_WELCOME_PREVIEW' => 'Preview',
+    'ACP_MEMBERONBOARDING_WELCOME_PREVIEW_EXPLAIN' => 'This preview is shown in the ACP and simulates how the private message will look with the most common BBCode tags.',
 
     'ACP_MEMBERONBOARDING_STAFF_ALERT' => 'Enable staff alerts',
     'ACP_MEMBERONBOARDING_STAFF_ALERT_EXPLAIN' => 'Shows a panel of pending new members in the ACP and prioritizes open follow-up entries.',
@@ -68,7 +70,7 @@ $lang = array_merge($lang, [
     'ACP_MEMBERONBOARDING_LEVEL_ACTIVE_MIN' => 'Minimum percentage for “Active”',
     'ACP_MEMBERONBOARDING_LEVEL_ACTIVE_MIN_EXPLAIN' => 'When a member reaches this percentage, they move into the “Active” range. It must be greater than the “Integrated” value.',
 
-    'ACP_MEMBERONBOARDING_RECOMMEND_FORUMS_EXPLAIN' => 'Comma-separated list with names of areas or forums recommended to new members.',
+    'ACP_MEMBERONBOARDING_RECOMMEND_FORUMS_EXPLAIN' => 'One recommendation per line. Use plain text or the format Title | URL to create clickable links to forums, topics or guides.',
 
     'ACP_MEMBERONBOARDING_FIRST_BADGE' => 'Enable starter badge',
     'ACP_MEMBERONBOARDING_FIRST_BADGE_EXPLAIN' => 'Automatically records an internal achievement when the member completes 100% of the journey.',

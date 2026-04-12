@@ -184,7 +184,7 @@
                     </div>
                     <ul class="memberonboarding-recommended">
                         <!-- BEGIN recommended_forum -->
-                        <li>{recommended_forum.FORUM_NAME}</li>
+                        <li><!-- IF recommended_forum.S_HAS_URL --><a href="{recommended_forum.U_FORUM}">{recommended_forum.FORUM_NAME}</a><!-- ELSE -->{recommended_forum.FORUM_NAME}<!-- ENDIF --></li>
                         <!-- END recommended_forum -->
                     </ul>
                 </div>

@@ -7,33 +7,66 @@
 .memberonboarding-chip {
     display: inline-block;
     padding: 2px 8px;
-    border-radius: 999px;
+    border: 1px solid rgba(127, 127, 127, 0.28);
+    background: rgba(127, 127, 127, 0.06);
     font-size: 11px;
-    line-height: 1.5;
+    line-height: 1.4;
     font-weight: 700;
     white-space: nowrap;
 }
-.memberonboarding-chip-good { background: #e8f7ea; color: #1f6b2c; }
-.memberonboarding-chip-watch { background: #fff4db; color: #8a5b00; }
-.memberonboarding-chip-alert { background: #fdeaea; color: #a12622; }
-.memberonboarding-chip-neutral { background: #eef2f6; color: #4b5a68; }
+.memberonboarding-chip-good { background: rgba(47, 125, 68, 0.10); color: #2f7d44; }
+.memberonboarding-chip-watch { background: rgba(138, 101, 0, 0.10); color: #8a6500; }
+.memberonboarding-chip-alert { background: rgba(156, 58, 43, 0.10); color: #9c3a2b; }
+.memberonboarding-chip-neutral { background: rgba(127, 127, 127, 0.10); color: inherit; }
 .memberonboarding-progressbar {
     width: 110px;
     height: 8px;
-    background: #edf1f5;
-    border-radius: 999px;
+    background: rgba(127, 127, 127, 0.14);
     overflow: hidden;
     margin: 0 0 4px 0;
 }
 .memberonboarding-progressbar span {
     display: block;
     height: 100%;
-    background: #5c7ea6;
+    background: #4c6fa8;
 }
 .memberonboarding-progresscell { min-width: 130px; }
-.memberonboarding-muted { color: #6b7785; font-size: 11px; }
-.memberonboarding-row-alert td { background: #fff7f7 !important; }
-.memberonboarding-row-done td { background: #f7fcf7 !important; }
+.memberonboarding-muted { color: inherit; opacity: 0.78; font-size: 11px; }
+.memberonboarding-row-alert td { background: rgba(156, 58, 43, 0.06) !important; }
+.memberonboarding-row-done td { background: rgba(47, 125, 68, 0.06) !important; }
+.memberonboarding-editor-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0 0 8px 0;
+}
+.memberonboarding-preview-note {
+    margin: 8px 0 6px;
+    color: inherit;
+    opacity: 0.78;
+}
+.memberonboarding-preview-box {
+    margin-top: 8px;
+    padding: 10px 12px;
+    border: 1px solid rgba(127, 127, 127, 0.28);
+    background: rgba(127, 127, 127, 0.04);
+}
+.memberonboarding-preview-content {
+    margin-top: 8px;
+    line-height: 1.6;
+}
+.memberonboarding-preview-content blockquote {
+    margin: 8px 0;
+    padding: 0 0 0 12px;
+    border-left: 3px solid rgba(127, 127, 127, 0.28);
+}
+.memberonboarding-preview-content ul,
+.memberonboarding-preview-content ol {
+    margin: 8px 0 8px 20px;
+}
+.memberonboarding-preview-content p {
+    margin: 0 0 8px 0;
+}
 </style>
 
 <form id="acp_memberonboarding" method="post" action="{U_ACTION}">
@@ -122,7 +155,23 @@
                 <span>{L_ACP_MEMBERONBOARDING_WELCOME_MESSAGE_EXPLAIN}</span>
             </dt>
             <dd>
+                <div class="memberonboarding-editor-tools">
+                    <button type="button" class="button button-secondary memberonboarding-js-tag" data-tag="b">B</button>
+                    <button type="button" class="button button-secondary memberonboarding-js-tag" data-tag="i">I</button>
+                    <button type="button" class="button button-secondary memberonboarding-js-tag" data-tag="u">U</button>
+                    <button type="button" class="button button-secondary memberonboarding-js-tag" data-tag="quote">Quote</button>
+                    <button type="button" class="button button-secondary memberonboarding-js-tag" data-tag="url">URL</button>
+                    <button type="button" class="button button-secondary memberonboarding-js-tag" data-tag="list">List</button>
+                    <button type="button" class="button button-secondary memberonboarding-js-placeholder" data-placeholder="&#123;USERNAME&#125;">&#123;USERNAME&#125;</button>
+                    <button type="button" class="button button-secondary memberonboarding-js-placeholder" data-placeholder="&#123;BOARD_URL&#125;">&#123;BOARD_URL&#125;</button>
+                    <button type="button" class="button button-secondary memberonboarding-js-placeholder" data-placeholder="&#123;ONBOARDING_URL&#125;">&#123;ONBOARDING_URL&#125;</button>
+                </div>
                 <textarea id="memberonboarding_welcome_message" name="memberonboarding_welcome_message" rows="8" cols="80">{MEMBERONBOARDING_WELCOME_MESSAGE}</textarea>
+                <p class="memberonboarding-preview-note">{L_ACP_MEMBERONBOARDING_WELCOME_PREVIEW_EXPLAIN}</p>
+                <div class="memberonboarding-preview-box">
+                    <strong>{L_ACP_MEMBERONBOARDING_WELCOME_PREVIEW}</strong>
+                    <div id="memberonboarding_welcome_preview" class="memberonboarding-preview-content"></div>
+                </div>
             </dd>
         </dl>
 
@@ -132,7 +181,7 @@
                 <span>{L_ACP_MEMBERONBOARDING_RECOMMEND_FORUMS_EXPLAIN}</span>
             </dt>
             <dd>
-                <textarea id="memberonboarding_recommend_forums" name="memberonboarding_recommend_forums" rows="3" cols="60">{MEMBERONBOARDING_RECOMMEND_FORUMS}</textarea>
+                <textarea id="memberonboarding_recommend_forums" name="memberonboarding_recommend_forums" rows="6" cols="80">{MEMBERONBOARDING_RECOMMEND_FORUMS}</textarea>
             </dd>
         </dl>
 
@@ -360,5 +409,101 @@
         {S_FORM_TOKEN}
     </fieldset>
 </form>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var textarea = document.getElementById('memberonboarding_welcome_message');
+    var preview = document.getElementById('memberonboarding_welcome_preview');
+
+    if (!textarea || !preview) {
+        return;
+    }
+
+    function insertText(value) {
+        var start = textarea.selectionStart || 0;
+        var end = textarea.selectionEnd || 0;
+        var current = textarea.value;
+        textarea.value = current.substring(0, start) + value + current.substring(end);
+        textarea.focus();
+        textarea.selectionStart = textarea.selectionEnd = start + value.length;
+        renderPreview();
+    }
+
+    function wrapSelection(openTag, closeTag, fallbackText) {
+        var start = textarea.selectionStart || 0;
+        var end = textarea.selectionEnd || 0;
+        var current = textarea.value;
+        var selected = current.substring(start, end) || fallbackText;
+        var replacement = openTag + selected + closeTag;
+        textarea.value = current.substring(0, start) + replacement + current.substring(end);
+        textarea.focus();
+        textarea.selectionStart = start + openTag.length;
+        textarea.selectionEnd = start + openTag.length + selected.length;
+        renderPreview();
+    }
+
+    function escapeHtml(value) {
+        return value
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+    }
+
+    function renderPreview() {
+        var text = textarea.value || '';
+        text = text.replace(/\{USERNAME\}/g, 'DemoUser')
+            .replace(/\{BOARD_URL\}/g, 'https://example.com/forum')
+            .replace(/\{ONBOARDING_URL\}/g, 'https://example.com/forum/app.php/memberonboarding');
+        var html = escapeHtml(text);
+        html = html.replace(/\[b\](.*?)\[\/b\]/gis, '<strong>$1</strong>');
+        html = html.replace(/\[i\](.*?)\[\/i\]/gis, '<em>$1</em>');
+        html = html.replace(/\[u\](.*?)\[\/u\]/gis, '<span style="text-decoration:underline;">$1</span>');
+        html = html.replace(/\[quote\](.*?)\[\/quote\]/gis, '<blockquote>$1</blockquote>');
+        html = html.replace(/\[url=(.*?)\](.*?)\[\/url\]/gis, '<a href="$1" target="_blank" rel="noopener">$2</a>');
+        html = html.replace(/\[url\](.*?)\[\/url\]/gis, '<a href="$1" target="_blank" rel="noopener">$1</a>');
+        html = html.replace(/\[list\](.*?)\[\/list\]/gis, function (_, content) {
+            var items = content.split('[*]').map(function (item) { return item.trim(); }).filter(Boolean);
+            if (!items.length) {
+                return '';
+            }
+            return '<ul><li>' + items.join('</li><li>') + '</li></ul>';
+        });
+        html = html.replace(/
+{2,}/g, '</p><p>');
+        html = '<p>' + html.replace(/
+/g, '<br>') + '</p>';
+        preview.innerHTML = html;
+    }
+
+    document.querySelectorAll('.memberonboarding-js-tag').forEach(function (button) {
+        button.addEventListener('click', function () {
+            var tag = button.getAttribute('data-tag');
+            if (tag === 'url') {
+                wrapSelection('[url=https://example.com]', '[/url]', 'Link text');
+                return;
+            }
+            if (tag === 'list') {
+                insertText('[list]
+[*]First item
+[*]Second item
+[/list]');
+                return;
+            }
+            wrapSelection('[' + tag + ']', '[/' + tag + ']', 'text');
+        });
+    });
+
+    document.querySelectorAll('.memberonboarding-js-placeholder').forEach(function (button) {
+        button.addEventListener('click', function () {
+            insertText(button.getAttribute('data-placeholder'));
+        });
+    });
+
+    textarea.addEventListener('input', renderPreview);
+    renderPreview();
+});
+</script>
+
 
 <!-- INCLUDE overall_footer.html -->

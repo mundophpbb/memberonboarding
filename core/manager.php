@@ -1112,6 +1112,13 @@ class manager
 
             case 'first_post':
             case 'first_topic':
+                $primary_recommended_url = $this->get_primary_recommended_url();
+
+                if ($primary_recommended_url !== '')
+                {
+                    return $primary_recommended_url;
+                }
+
                 return append_sid("{$this->phpbb_root_path}index.{$this->php_ext}");
         }
 
@@ -1139,7 +1146,136 @@ class manager
 
     public function get_recommended_forums()
     {
-        $items = array_filter(array_map('trim', explode(',', (string) $this->config['memberonboarding_recommend_forums'])));
-        return array_values($items);
+        $items = [];
+        $raw_recommendations = $this->get_recommended_forums_config();
+        $lines = preg_match('/\r\n|\r|\n/', $raw_recommendations)
+            ? preg_split('/\r\n|\r|\n/', $raw_recommendations)
+            : explode(',', $raw_recommendations);
+
+        foreach ($lines as $line)
+        {
+            $line = trim((string) $line);
+
+            if ($line === '')
+            {
+                continue;
+            }
+
+            $label = $line;
+            $url = '';
+
+            if (strpos($line, '|') !== false)
+            {
+                list($label, $url) = array_map('trim', explode('|', $line, 2));
+            }
+            else if (strpos($line, '=>') !== false)
+            {
+                list($label, $url) = array_map('trim', explode('=>', $line, 2));
+            }
+            else if ($this->looks_like_url($line))
+            {
+                $url = $line;
+            }
+
+            if ($label === '')
+            {
+                $label = $url;
+            }
+
+            $url = $this->sanitize_recommended_url($url);
+
+            if ($label === '')
+            {
+                continue;
+            }
+
+            $items[] = [
+                'label' => $label,
+                'url'   => $url,
+            ];
+        }
+
+        return $items;
+    }
+
+    protected function get_primary_recommended_url()
+    {
+        foreach ($this->get_recommended_forums() as $item)
+        {
+            if (!empty($item['url']))
+            {
+                return (string) $item['url'];
+            }
+        }
+
+        return '';
+    }
+
+    protected function get_recommended_forums_config()
+    {
+        $sql = "SELECT config_value
+            FROM " . $this->table_prefix . "config_text
+            WHERE config_name = 'memberonboarding_recommend_forums'";
+        $result = $this->db->sql_query_limit($sql, 1);
+        $value = $this->db->sql_fetchfield('config_value');
+        $this->db->sql_freeresult($result);
+
+        if ($value !== false && $value !== null && $value !== '')
+        {
+            return (string) $value;
+        }
+
+        return isset($this->config['memberonboarding_recommend_forums']) ? (string) $this->config['memberonboarding_recommend_forums'] : '';
+    }
+
+    protected function looks_like_url($value)
+    {
+        $value = trim((string) $value);
+
+        if ($value === '')
+        {
+            return false;
+        }
+
+        if (preg_match('#^https?://#i', $value))
+        {
+            return true;
+        }
+
+        return (bool) preg_match('#^(?:/|\./|\.\./|[a-z0-9_\-]+\.' . preg_quote($this->php_ext, '#') . '(?:\?|$)|app\.php/)#i', $value);
+    }
+
+    protected function sanitize_recommended_url($url)
+    {
+        $url = trim((string) $url);
+
+        if ($url === '')
+        {
+            return '';
+        }
+
+        if (preg_match('#^javascript:#i', $url))
+        {
+            return '';
+        }
+
+        if (preg_match('#^https?://#i', $url))
+        {
+            return $url;
+        }
+
+        $board_url = function_exists('generate_board_url') ? rtrim(generate_board_url(), '/') : '';
+
+        if ($board_url === '')
+        {
+            return $url;
+        }
+
+        if (strpos($url, '/') === 0)
+        {
+            return $board_url . $url;
+        }
+
+        return $board_url . '/' . ltrim($url, './');
     }
 }
